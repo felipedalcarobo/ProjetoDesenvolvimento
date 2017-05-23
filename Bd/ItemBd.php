@@ -1,27 +1,49 @@
 <?php
 
-require_once "config.php";
+require_once "configBd.php";
+include '../Bean/ListaBean.php';
+include '../Bean/UsuarioBean.php';
+include '../Bean/ItemBean.php';
 
-$con = new PDO($CONFIG['DB']['STRING'],$CONFIG['DB']['USER'],$CONFIG['DB']['SENHA']);
+$con = new PDO($CONFIG['DB']['STRING'], $CONFIG['DB']['USER'], $CONFIG['DB']['SENHA']);
 
-function salvar() {
-	$stmt = $con->prepare("INSERT INTO item(nome, email) VALUES(?,?)");
-	$v1 = "Pedro";
-	$stmt->bindParam(1, $v1);
-	$v2 = "email@email.com";
-	$stmt->bindParam(2, $v2);
-	$stmt->execute();
+
+
+function criarItemBd($id_lista, $itemNome, $quantidade, $idUsuarioAdd) {
+    global $con;
+    
+        $sql = "INSERT INTO item (id_lista, nome, quantidade, id_usuario_add)VALUES (".$id_lista.", '".$itemNome."', ".$quantidade.", ".$idUsuarioAdd.")";
+
+        if ($con->query($sql) === TRUE) {
+            return $sql;
+        } else {
+            return $sql;
+        }
+   $con->close();
 }
 
-function listar() {
-	global $con;
-	$rs = $con->query("SELECT iditem, nome, email FROM item");
-	
-	while($row = $rs->fetch(PDO::FETCH_OBJ)) {
-		echo $row->idpessoa."<br/>";
-		echo $row->nome."<br/>";
-		echo $row->email."<br/>";
-	}
+function atualizarItemBd($idItem, $itemNome, $quantidade, $itemComprado) {
+    global $con;
+    
+        $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ".idItem;
+
+        if ($con->query($sql) === TRUE) {
+            return $sql;
+        } else {
+            return $sql;
+        }
+   $con->close();
 }
 
-listar();
+function excluirItemBd($idItem) {
+    global $con;
+    
+        $sql = "delete from item where id_item = ".idItem;
+
+        if ($con->query($sql) === TRUE) {
+            return $sql;
+        } else {
+            return $sql;
+        }
+   $con->close();
+}
