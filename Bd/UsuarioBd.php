@@ -1,27 +1,38 @@
 <?php
 
-require_once "config.php";
+require_once "configBd.php";
+include '../Bean/ListaBean.php';
+include '../Bean/UsuarioBean.php';
+include '../Bean/ItemBean.php';
 
-$con = new PDO($CONFIG['DB']['STRING'],$CONFIG['DB']['USER'],$CONFIG['DB']['SENHA']);
+$con = new PDO($CONFIG['DB']['STRING'], $CONFIG['DB']['USER'], $CONFIG['DB']['SENHA']);
 
-function salvar() {
-	$stmt = $con->prepare("INSERT INTO pessoa(nome, email) VALUES(?,?)");
-	$v1 = "Pedro";
-	$stmt->bindParam(1, $v1);
-	$v2 = "email@email.com";
-	$stmt->bindParam(2, $v2);
-	$stmt->execute();
+function criarUsuario($nome, $email) {
+    global $con;
+
+    $sql = "INSERT INTO usuario (nome, email)VALUES ('" . $nome . "', '" . $email . "')";
+
+    if ($con->query($sql) === TRUE) {
+        return $sql;
+    } else {
+        return $sql;
+    }
+    $con->close();
 }
 
-function listar() {
-	global $con;
-	$rs = $con->query("SELECT idpessoa, nome, email FROM pessoa");
-	
-	while($row = $rs->fetch(PDO::FETCH_OBJ)) {
-		echo $row->idpessoa."<br/>";
-		echo $row->nome."<br/>";
-		echo $row->email."<br/>";
-	}
+function buscarUsuario() {
+    global $con;
+    $rs = $con->query("SELECT idpessoa, nome, email FROM pessoa");
 }
 
-listar();
+function buscarPreferencias($usuario) {
+    global $con;
+    $preferencias = array();
+
+    $pre = $con->query("SELECT nome_produto FROM preferencia WHERE id_usuario = " . $usuario . " ORDER BY relevancia desc limit 10");
+    while ($row3 = $pre->fetch(PDO::FETCH_OBJ)) {
+        array_push($preferencias, $row3->nome_produto);
+    }
+    
+    return $preferencias;
+}
