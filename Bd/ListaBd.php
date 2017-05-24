@@ -23,9 +23,9 @@ function listarListaBd() {
             $lista->usuarioAdmin = $usuario;
         }
         
-        $ia = $con->query("SELECT id_item, nome, quantidade FROM item WHERE id_lista = " . $row->id_lista);
+        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado FROM item WHERE id_lista = " . $row->id_lista);
         while ($row2 = $ia->fetch(PDO::FETCH_OBJ)){
-            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, null);
+            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null);
             $lista->itens[] = $item;
         }
         
@@ -59,9 +59,9 @@ function listasUsuarioBd($usuarioLogado) {
             $lista->usuarioAdmin = $usuario;
         }
         
-        $ia = $con->query("SELECT id_item, nome, quantidade FROM item WHERE id_lista = " . $row->id_lista);
+        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado FROM item WHERE id_lista = " . $row->id_lista);
         while ($row2 = $ia->fetch(PDO::FETCH_OBJ)){
-            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, null);
+            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null);
             $lista->itens[] = $item;
         }
         
@@ -95,9 +95,9 @@ function listasPesquisaBd($listaPesquisa) {
             $lista->usuarioAdmin = $usuario;
         }
         
-        $ia = $con->query("SELECT id_item, nome, quantidade FROM item WHERE id_lista = " . $row->id_lista);
+        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado FROM item WHERE id_lista = " . $row->id_lista);
         while ($row2 = $ia->fetch(PDO::FETCH_OBJ)){
-            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, null);
+            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null);
             $lista->itens[] = $item;
         }
         

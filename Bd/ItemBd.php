@@ -25,7 +25,7 @@ function criarItemBd($id_lista, $itemNome, $quantidade, $idUsuarioAdd) {
 function atualizarItemBd($idItem, $itemNome, $quantidade, $itemComprado) {
     global $con;
     
-        $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ".idItem;
+        $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ". $idItem;
 
         if ($con->query($sql) === TRUE) {
             return $sql;
@@ -38,7 +38,7 @@ function atualizarItemBd($idItem, $itemNome, $quantidade, $itemComprado) {
 function excluirItemBd($idItem) {
     global $con;
     
-        $sql = "delete from item where id_item = ".idItem;
+        $sql = "delete from item where id_item = ". $idItem;
 
         if ($con->query($sql) === TRUE) {
             return $sql;
