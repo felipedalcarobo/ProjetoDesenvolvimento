@@ -6,14 +6,16 @@ class Item {
     public $nome;
     public $quantidade;
     public $lista;
+    public $item_comprado;
 
 
 
-    public function __construct($id, $nome, $quantidade, $lista) {
+    public function __construct($id, $nome, $quantidade, $item_comprado, $lista) {
         $this->id = $id;
         $this->nome = $nome;
         $this->quantidade = $quantidade;
         $this->lista = $lista;
+        $this->item_comprado = $item_comprado;
     }
 
     public function getLista() {
