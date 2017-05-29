@@ -1,6 +1,6 @@
 <?php
 
-require_once "configBd.php";
+require_once "ConfigBd.php";
 include '../Bean/ListaBean.php';
 include '../Bean/UsuarioBean.php';
 include '../Bean/ItemBean.php';

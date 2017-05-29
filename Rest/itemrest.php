@@ -25,6 +25,17 @@ $app = new \Slim\App();
 
 //defina a rota
 
+
+$app->get('/', function (Request $request, Response $response) {
+    echo 'Teste';
+});
+
+$app->get('/listarItens/{lista}', function (Request $request, Response $response) {
+    $id_lista = $request->getAttribute('lista');
+    $itens = itensListaBd($id_lista);
+    echo json_encode(utf8ize($itens));
+});
+
 $app->post('/criarItem', function (Request $request, Response $response) {
     $il = $request->getParam('id_lista');
     $in = $request->getParam('itemNome');
@@ -42,7 +53,6 @@ $app->put('/atualizarItem', function (Request $request, Response $response) {
     $listas = atualizarItemBd($ii, $in, $qt, $ic);
     echo json_encode(utf8ize($listas));
 });
-
 
 $app->delete('/excluirItem', function (Request $request, Response $response) {
     $ii = $request->getParam('id_item');

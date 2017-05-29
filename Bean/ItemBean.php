@@ -7,15 +7,16 @@ class Item {
     public $quantidade;
     public $lista;
     public $item_comprado;
+    public $id_usuario_add;
 
 
-
-    public function __construct($id, $nome, $quantidade, $item_comprado, $lista) {
+    public function __construct($id, $nome, $quantidade, $item_comprado, $lista, $id_usuario_add) {
         $this->id = $id;
         $this->nome = $nome;
         $this->quantidade = $quantidade;
         $this->lista = $lista;
         $this->item_comprado = $item_comprado;
+        $this->id_usuario_add = $id_usuario_add;
     }
 
     public function getLista() {
@@ -50,6 +51,12 @@ class Item {
         $this->quantidade = $quantidade;
     }
 
+    public function getIdUsuarioAdd() {
+        return $this->id_usuario_add;
+    }
 
+    public function setIdUsuarioAdd($id_usuario_add) {
+        $this->id_usuario_add = $id_usuario_add;
+    }
     
 }
