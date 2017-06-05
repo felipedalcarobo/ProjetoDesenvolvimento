@@ -27,7 +27,7 @@ function itensListaBd($id_lista) {
 function criarItemBd($id_lista, $itemNome, $quantidade, $idUsuarioAdd) {
     global $con;
     
-        $sql = "INSERT INTO item (id_lista, nome, quantidade, id_usuario_add)VALUES (".$id_lista.", '".$itemNome."', ".$quantidade.", ".$idUsuarioAdd.")";
+        $sql = "INSERT INTO item (id_lista, nome, quantidade, id_usuario_add) VALUES (".$id_lista.", '".$itemNome."', ".$quantidade.", ".$idUsuarioAdd.")";
 
         if ($con->query($sql)) {
             return $con->lastInsertId();
@@ -40,25 +40,25 @@ function criarItemBd($id_lista, $itemNome, $quantidade, $idUsuarioAdd) {
 function atualizarItemBd($idItem, $itemNome, $quantidade, $itemComprado) {
     global $con;
     
-        $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ". $idItem;
+    $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ". $idItem;
 
-        if ($con->query($sql)) {
-            return $sql;
-        } else {
-            return "FALHOU";
-        }
+    if ($con->query($sql)) {
+        return $sql;
+    } else {
+        return "FALHOU";
+    }
    $con->close();
 }
 
 function excluirItemBd($idItem) {
     global $con;
     
-        $sql = "delete from item where id_item = ". $idItem;
+    $sql = "delete from item where id_item = ". $idItem;
 
-        if ($con->query($sql)) {
-            return $sql;
-        } else {
-            return "FALHOU";
-        }
+    if ($con->query($sql)) {
+        return $sql;
+    } else {
+        return "FALHOU";
+    }
    $con->close();
 }
