@@ -131,7 +131,7 @@ function criarListaBd($usuarioLogado, $nomeLista) {
 function atualizarListaBd($idLista, $nomeLista) {
     global $con;
     
-        $sql = "update lista set (nome = '".$nomeLista."' where id_lista = ".$idLista;
+        $sql = "update lista set nome = '".$nomeLista."' where id_lista = ".$idLista;
 
         if ($con->query($sql) === TRUE) {
             return $sql;
@@ -141,7 +141,7 @@ function atualizarListaBd($idLista, $nomeLista) {
    $con->close(); 
 }
 
-function excluirListaBd($idLista, $nomeLista) {
+function excluirListaBd($idLista) {
     global $con;
     
         $sql = "delete from lista where id_lista = ".$idLista;

@@ -40,12 +40,18 @@ function criarItemBd($id_lista, $itemNome, $quantidade, $idUsuarioAdd) {
 function atualizarItemBd($idItem, $itemNome, $quantidade, $itemComprado) {
     global $con;
     
-    $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ". $idItem;
+    $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade;
+
+    if(isset($itemComprado)) {
+        $sql .= ", item_comprado = " . $itemComprado;
+    }
+
+    $sql .= " where id_item = " . $idItem;
 
     if ($con->query($sql)) {
         return $sql;
     } else {
-        return "FALHOU";
+        return $sql;
     }
    $con->close();
 }
