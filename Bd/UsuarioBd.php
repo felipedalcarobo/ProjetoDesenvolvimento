@@ -12,17 +12,33 @@ function criarUsuario($nome, $email) {
 
     $sql = "INSERT INTO usuario (nome, email)VALUES ('" . $nome . "', '" . $email . "')";
 
-    if ($con->query($sql) === TRUE) {
-        return $sql;
-    } else {
-        return $sql;
+    try {
+        if ($con->query($sql)) {
+            return $con->lastInsertId();
+        } else {
+            return -10;
+        }
+    } catch (PDOException $e) {
+        return -10;
     }
+
     $con->close();
 }
 
-function buscarUsuario() {
+function buscarUsuario($usuario) {
     global $con;
     $rs = $con->query("SELECT idpessoa, nome, email FROM pessoa");
+    
+    
+    try {
+        $rs = $con->query("select id_usuario from usuario where usuario.email = '" . $contribuinteEmail . "' and usuario.id_usuario not in (select id_usuario from rul where rul.id_lista = " . $listaPesquisa . ")");
+
+        while ($row = $rs->fetch(PDO::FETCH_OBJ)) {
+            $usuario = $row->id_usuario;
+        }
+    } catch (PDOException $e) {
+        return -30;
+    }
 }
 
 function buscarPreferencias($usuario) {
@@ -33,6 +49,6 @@ function buscarPreferencias($usuario) {
     while ($row3 = $pre->fetch(PDO::FETCH_OBJ)) {
         array_push($preferencias, $row3->nome_produto);
     }
-    
+
     return $preferencias;
 }

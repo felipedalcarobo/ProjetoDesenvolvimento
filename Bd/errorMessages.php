@@ -1,7 +1,5 @@
 <?php
 
-
-
 $array = array(
     -10 => "Item não pode ser inserido.",
     -20 => "Item não pode ser apagado.",
@@ -11,6 +9,4 @@ $array = array(
 function errorMessage($codigoErro) {
             return $array[$codigoErro];
 }
-
-?>
 

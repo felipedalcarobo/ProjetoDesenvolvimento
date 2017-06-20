@@ -32,11 +32,17 @@ function atualizarItemBd($idItem, $itemNome, $quantidade, $itemComprado) {
     
         $sql = "UPDATE item set nome = '".$itemNome."', quantidade = ".$quantidade.", item_comprado= ".$itemComprado." where id_item = ". $idItem;
 
-        if ($con->query($sql) === TRUE) {
-            return $sql;
-        } else {
-            return $sql;
+        try {
+            if ($con->query($sql)) {
+                return $con->lastInsertId();
+            } else {
+                return -10;
+            }
         }
+        catch (PDOException $e){
+            return -10;
+        }
+        
    $con->close();
 }
 

@@ -114,11 +114,16 @@ function criarListaBd($usuarioLogado, $nomeLista) {
 
     $sql = "INSERT INTO lista (nome, id_admin_lista) VALUES ('" . $nomeLista . "', " . $usuarioLogado . ")";
 
-    if ($con->query($sql) === TRUE) {
-        return $sql;
-    } else {
-        return $sql;
+    try {
+        if ($con->query($sql)) {
+            return $con->lastInsertId();
+        } else {
+            return -10;
+        }
+    } catch (PDOException $e) {
+        return -10;
     }
+    
     $con->close();
 }
 
@@ -127,11 +132,16 @@ function atualizarListaBd($idLista, $nomeLista) {
 
     $sql = "update lista set (nome = '" . $nomeLista . "' where id_lista = " . $idLista;
 
-    if ($con->query($sql) === TRUE) {
-        return $sql;
-    } else {
-        return $sql;
+    try {
+        if ($con->query($sql)) {
+            return $con->lastInsertId();
+        } else {
+            return -10;
+        }
+    } catch (PDOException $e) {
+        return -10;
     }
+
     $con->close();
 }
 
@@ -140,10 +150,14 @@ function excluirListaBd($idLista, $nomeLista) {
 
     $sql = "delete from lista where id_lista = " . $idLista;
 
-    if ($con->query($sql) === TRUE) {
-        return $sql;
-    } else {
-        return $sql;
+    try {
+        if ($con->query($sql)) {
+            return 0;
+        } else {
+            return -20;
+        }
+    } catch (PDOException $e) {
+        return -20;
     }
     $con->close();
 }
@@ -166,7 +180,7 @@ function adicionarContribuinteListaBd($id_lista, $contribuinteEmail) {
         return -30;
     } else {
         try {
-            $sql = "INSERT INTO rul (id_lista, id_usuario) VALUES ('" . $idLista . "', " . $usuario . ")";
+            $sql = "INSERT INTO rul (id_lista, id_usuario) VALUES ('" . $id_lista . "', " . $usuario . ")";
             if ($con->query($sql)) {
                 return 0;
             } else {
@@ -176,8 +190,5 @@ function adicionarContribuinteListaBd($id_lista, $contribuinteEmail) {
             return -30;
         }
     }
-
-
-
     $con->close();
 }
