@@ -8,7 +8,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 function utf8ize($d) {
     if (is_array($d)) {
-        foreach ($d as $k => $v){
+        foreach ($d as $k => $v) {
             $d[$k] = utf8ize($v);
         }
     } else if (is_object($d)) {
@@ -23,7 +23,6 @@ function utf8ize($d) {
 
 //instancie o objeto
 $app = new \Slim\App();
-
 //defina a rota
 $app->get('/', function () {
     echo "Hello, World!";
@@ -65,6 +64,14 @@ $app->delete('/excluirLista', function (Request $request, Response $response) {
     $listas = excluirListaBd($il);
     echo json_encode(utf8ize($listas));
 });
+
+$app->put('/adicionarcontribuinte', function (Request $request, Response $response) {
+    $il = $request->getParam('id_lista');
+    $nl = $request->getParam('contribuinteEmail');
+    $listas = adicionarContribuinteListaBd($il, $nl);
+    echo json_encode(utf8ize($listas));
+});
+
 
 //rode a aplicação Slim 
 $app->run();
