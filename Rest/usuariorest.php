@@ -37,7 +37,7 @@ $app->get('/buscarPreferencias/{usuario}', function (Request $request, Response 
 
 $app->get('/buscarUsuario/{usuario}', function (Request $request, Response $response) {
     $one = $request->getAttribute('usuario');
-    $listas = buscarUsuario($one);
+    $$usuario = buscarUsuario($one);
     echo json_encode(utf8ize($usuario));
 });
 
