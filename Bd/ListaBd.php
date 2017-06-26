@@ -23,9 +23,9 @@ function listarListaBd() {
             $lista->usuarioAdmin = $usuario;
         }
 
-        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado FROM item WHERE id_lista = " . $row->id_lista);
+        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado, id_usuario_add FROM item WHERE id_lista = " . $row->id_lista);
         while ($row2 = $ia->fetch(PDO::FETCH_OBJ)) {
-            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null);
+            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null, $row2->id_usuario_add);
             $lista->itens[] = $item;
         }
 
@@ -57,9 +57,9 @@ function listasUsuarioBd($usuarioLogado) {
             $lista->usuarioAdmin = $usuario;
         }
 
-        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado FROM item WHERE id_lista = " . $row->id_lista);
+        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado, id_usuario_add FROM item WHERE id_lista = " . $row->id_lista);
         while ($row2 = $ia->fetch(PDO::FETCH_OBJ)) {
-            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null);
+            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null, $row2->id_usuario_add);
             $lista->itens[] = $item;
         }
 
@@ -91,9 +91,9 @@ function listasPesquisaBd($listaPesquisa) {
             $lista->usuarioAdmin = $usuario;
         }
 
-        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado FROM item WHERE id_lista = " . $row->id_lista);
+        $ia = $con->query("SELECT id_item, nome, quantidade, item_comprado, id_usuario_add FROM item WHERE id_lista = " . $row->id_lista);
         while ($row2 = $ia->fetch(PDO::FETCH_OBJ)) {
-            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null);
+            $item = new Item($row2->id_item, $row2->nome, $row2->quantidade, $row2->item_comprado, null, $row2->id_usuario_add);
             $lista->itens[] = $item;
         }
 
@@ -167,7 +167,7 @@ function adicionarContribuinteListaBd($id_lista, $contribuinteEmail) {
     $usuario = 0;
 
     try {
-        $rs = $con->query("select id_usuario from usuario where usuario.email = '" . $contribuinteEmail . "' and usuario.id_usuario not in (select id_usuario from rul where rul.id_lista = " . $listaPesquisa . ")");
+        $rs = $con->query("select id_usuario from usuario where usuario.email = '" . $contribuinteEmail . "' and usuario.id_usuario not in (select id_usuario from rul where rul.id_lista = " . $id_lista . ")");
 
         while ($row = $rs->fetch(PDO::FETCH_OBJ)) {
             $usuario = $row->id_usuario;
