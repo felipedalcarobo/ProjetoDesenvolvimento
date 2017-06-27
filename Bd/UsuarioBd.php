@@ -27,20 +27,23 @@ function criarUsuario($nome, $email) {
 
 function buscarUsuario($usuario) {
     global $con;
-
-
-    if (filter_var($usuario, FILTER_VALIDATE_EMAIL)) {
-        $us = $con->query("SELECT id_usuario, nome, email FROM usuario where email = '" . $usuario . "'");
-    } else {
-        $us = $con->query("SELECT id_usuario, nome, email FROM usuario where nome = '" . $usuario . "'");
-    }
-
-
-    while ($row = $us->fetch(PDO::FETCH_OBJ)) {
-        $usuario = new Usuario($row->id_usuario, $row->nome, $row->email, "");
-    }
+    $usuario = 0;
     
-    return $usuario;
+    try {
+        $us = $con->query("SELECT id_usuario, nome, email FROM usuario where email = '" . $usuario . "'");
+
+        while ($row = $us->fetch(PDO::FETCH_OBJ)) {
+            $usuario = new Usuario($row->id_usuario, $row->nome, $row->email, "");
+        }
+    } catch (PDOException $e) {
+            return -30;
+        }
+    
+    if ($usuario == 0) {
+        return -30;
+        } else {
+            return $usuario;
+    }
 }
 
 function buscarPreferencias($usuario) {
