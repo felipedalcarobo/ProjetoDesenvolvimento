@@ -192,3 +192,34 @@ function adicionarContribuinteListaBd($id_lista, $contribuinteEmail) {
     }
     $con->close();
 }
+
+function excluirContribuinteListaBd($id_lista, $contribuinteEmail) {
+    global $con;
+    $usuario = 0;
+
+    try {
+        $rs = $con->query("select id_usuario from usuario where usuario.email = '" . $contribuinteEmail . "' and usuario.id_usuario not in (select id_usuario from rul where rul.id_lista = " . $id_lista . ")");
+
+        while ($row = $rs->fetch(PDO::FETCH_OBJ)) {
+            $usuario = $row->id_usuario;
+        }
+    } catch (PDOException $e) {
+        return -90;
+    }
+
+    if ($usuario == 0) {
+        return -90;
+    } else {
+        try {
+            $sql = "delete from rul where (id_lista = '" . $id_lista . "' and id_usuario = " . $usuario . ")";
+            if ($con->query($sql)) {
+                return 0;
+            } else {
+                return -90;
+            }
+        } catch (PDOException $e) {
+            return -90;
+        }
+    }
+    $con->close();
+}
