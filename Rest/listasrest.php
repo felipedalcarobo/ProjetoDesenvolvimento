@@ -72,6 +72,12 @@ $app->put('/adicionarcontribuinte', function (Request $request, Response $respon
     echo json_encode(utf8ize($listas));
 });
 
+$app->delete('/excluircontribuinte', function (Request $request, Response $response) {
+    $il = $request->getParam('id_lista');
+    $nl = $request->getParam('contribuinteEmail');
+    $listas = excluirContribuinteListaBd($il, $nl);
+    echo json_encode(utf8ize($listas));
+});
 
 //rode a aplicação Slim 
 $app->run();
